@@ -100,8 +100,12 @@ public class Optimal {
         int pf=0;
         int count=0;
         int[] q=new int[num_of_page_frames];
+        int[] q_c=new int[num_of_page_frames];
+        int q_count=0;
+        int[] timer=new int[num_of_page_frames];
         for(int i=0;i<num_of_page_frames;i++ ){
             q[i]=-1;
+            q_c[i]=0;
             
         }
         
@@ -173,10 +177,13 @@ public class Optimal {
                           
                           // end of 2nd if 
                           else {
-                              int min2=getMinValue(ones,ones_count);
-                              if(min2==q[o]){
-                                  index=o;
-                              }
+                              //int min2=getMinValue(ones,ones_count);
+                              int maxTime=getMaxValue(q_c);
+                              int search_index=linearSearch(q_c,maxTime);
+                              //longer time ta sorate hbe 
+                              
+                                  index=search_index;
+                              
                           } // end of 3rd Loop
                           }
                          //End finding index 
@@ -199,6 +206,7 @@ public class Optimal {
             }
             else{
                 pf=0;
+                
             }
             //out put 
             for(int a=0;a<num_of_page_frames+2;a++){
@@ -228,13 +236,32 @@ public class Optimal {
                     System.out.print("   PF      |");
                 }
                 System.out.println();
+                
+                 System.out.println();
+                 
+                 // Time manage 
+                 
+            for(int ii=0;ii<num_of_page_frames;ii++){
+                    if(q[ii]==timer[ii]){
+                        q_c[ii]++;
+                    }
+                    else
+                    {
+                      q_c[ii]=0;
+                      
+                    }
+                    if(i>=num_of_page_frames){
+                        timer[ii]=q[ii];
+                    }
+                    
+                    
+            }
             
             
-            
-        }
+        } // end the for loop
         
         
-        System.out.println(" PF = "+count+"");
+        System.out.println("PF = "+count+"");
     }
     
     }
